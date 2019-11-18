@@ -1,2 +1,2 @@
-describe Oystercard do 
+describe Oystercard do
 end
