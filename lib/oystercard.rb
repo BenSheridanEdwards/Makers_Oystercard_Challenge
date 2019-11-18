@@ -16,4 +16,8 @@ LIMIT = 100
   def over_limit?(money_added)
     (@balance + money_added) > LIMIT
   end
+
+  def deduct(fare)
+    @balance -= fare
+  end
 end
