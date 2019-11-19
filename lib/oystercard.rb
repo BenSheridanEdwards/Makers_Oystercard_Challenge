@@ -20,4 +20,8 @@ LIMIT = 100
   def deduct(fare)
     @balance -= fare
   end
+
+  def touch_in
+    @in_journey = true
+  end
 end
