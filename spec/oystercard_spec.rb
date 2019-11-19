@@ -4,6 +4,7 @@ describe OysterCard do
   let(:card) {OysterCard.new}
   let(:limit) { OysterCard::LIMIT } 
   let(:min_balance) { OysterCard::MINIMUM_BALANCE }
+  let(:min_fare) { OysterCard::MINIMUM_FARE}
 
   describe "#initialize" do
     it "should initialize the class with a balance of zero" do
@@ -49,11 +50,17 @@ describe OysterCard do
   end
 
   describe "#touch_out" do
-    it "should change in_journey status to false" do
+    before do
       card.top_up(50)
       card.touch_in
       card.touch_out
+    end
+    it "should change in_journey status to false" do
       expect(card.in_journey).to be_falsey
+    end
+
+    it 'should deduct a correct amount from my card when journey is complete' do
+      expect { card.deduct }.to change{card.balance}.by(-min_fare) 
     end
   end
 end
