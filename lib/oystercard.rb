@@ -1,6 +1,7 @@
 class OysterCard 
 
 LIMIT = 100
+MINIMUM_BALANCE = 1
 
   attr_reader :balance, :in_journey
 
@@ -10,12 +11,10 @@ LIMIT = 100
   end
 
   def top_up(amount)
-    raise "£100 maximum balance exceeded. Current Balance: #{@balance}" if self.over_limit?(amount)
-    @balance += amount
-  end
+    total = @balance + amount
+    raise top_up_amount_error(amount) if total > LIMIT
 
-  def over_limit?(money_added)
-    (@balance + money_added) > LIMIT
+    @balance += amount
   end
 
   def deduct(fare)
@@ -23,10 +22,30 @@ LIMIT = 100
   end
 
   def touch_in
+    raise minimum_balance_error if @balance < MINIMUM_BALANCE
     @in_journey = true
   end
 
   def touch_out
     @in_journey = false
   end
+
+  private 
+
+  def top_up_amount_error(amount)
+    message = "Can't exceed #{LIMIT} with #{amount}"
+    BalanceError.new(message)
+  end
+
+  def minimum_balance_error
+    message = "Insuffient funds, please top up by minimum balance #{MINIMUM_BALANCE}"
+    JourneyError.new(message)
+  end
+
+end
+
+class BalanceError < StandardError
+end
+
+class JourneyError < StandardError
 end
