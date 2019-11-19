@@ -5,10 +5,15 @@ describe OysterCard do
   let(:limit) { OysterCard::LIMIT } 
   let(:min_balance) { OysterCard::MINIMUM_BALANCE }
   let(:min_fare) { OysterCard::MINIMUM_FARE}
+  let(:station) { double :station }
 
   describe "#initialize" do
     it "should initialize the class with a balance of zero" do
       expect(card.balance).to eq(0)
+    end
+
+    it "should initialize with an entry station of nil" do
+      expect(card.entry_station).to eq(nil)
     end
   end
 
@@ -35,16 +40,21 @@ describe OysterCard do
 
   describe "#touch_in" do
 
-
-    it "should change the in_journey status to true" do
+    it "should accept an argument of the entry station, and store it" do
       card.top_up(50)
-      card.touch_in
-      expect(card.in_journey).to be_truthy
+      card.touch_in(station)
+      expect(card.entry_station).to eq station
+    end
+
+    it "should be in_journey after touching in" do
+      card.top_up(50)
+      card.touch_in(station)
+      expect(card.in_journey?).to be_truthy
     end
     
     it "should raise an error if user tries to travel under minimum balance" do
       message = "Insuffient funds, please top up by minimum balance #{min_balance}"
-      expect { card.touch_in }.to raise_error JourneyError, message
+      expect { card.touch_in(station) }.to raise_error JourneyError, message
     end
 
   end
@@ -52,11 +62,11 @@ describe OysterCard do
   describe "#touch_out" do
     before do
       card.top_up(50)
-      card.touch_in
+      card.touch_in(station)
       card.touch_out
     end
     it "should change in_journey status to false" do
-      expect(card.in_journey).to be_falsey
+      expect(card.in_journey?).to be_falsey
     end
 
     it 'should deduct a correct amount from my card when journey is complete' do

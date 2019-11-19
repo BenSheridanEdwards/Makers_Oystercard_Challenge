@@ -4,11 +4,11 @@ LIMIT = 100
 MINIMUM_BALANCE = 1
 MINIMUM_FARE = 5
 
-  attr_reader :balance, :in_journey
+  attr_reader :balance, :entry_station
 
   def initialize(balance = 0)
     @balance = balance 
-    @in_journey = false
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -22,13 +22,17 @@ MINIMUM_FARE = 5
     @balance -= fare
   end
 
-  def touch_in
+  def touch_in(station)
+    @entry_station = station
     raise minimum_balance_error if @balance < MINIMUM_BALANCE
-    @in_journey = true
   end
 
   def touch_out
-    @in_journey = false
+    @entry_station = nil
+  end
+
+  def in_journey?
+    !@entry_station.nil?
   end
 
   private 
@@ -42,7 +46,6 @@ MINIMUM_FARE = 5
     message = "Insuffient funds, please top up by minimum balance #{MINIMUM_BALANCE}"
     JourneyError.new(message)
   end
-
 end
 
 class BalanceError < StandardError
