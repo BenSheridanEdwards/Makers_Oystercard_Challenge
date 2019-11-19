@@ -1,13 +1,13 @@
-class OysterCard 
+class OysterCard
+  LIMIT = 100
+  MINIMUM_BALANCE = 1
+  MINIMUM_FARE = 5
 
-LIMIT = 100
-MINIMUM_BALANCE = 1
-MINIMUM_FARE = 5
-
-  attr_reader :balance, :entry_station
+  attr_reader :balance
+  attr_reader :entry_station
 
   def initialize(balance = 0)
-    @balance = balance 
+    @balance = balance
     @entry_station = nil
   end
 
@@ -35,7 +35,7 @@ MINIMUM_FARE = 5
     !@entry_station.nil?
   end
 
-  private 
+  private
 
   def top_up_amount_error(amount)
     message = "Can't exceed #{LIMIT} with #{amount}"
@@ -43,7 +43,7 @@ MINIMUM_FARE = 5
   end
 
   def minimum_balance_error
-    message = "Insuffient funds, please top up by minimum balance #{MINIMUM_BALANCE}"
+    message = "Insuffient funds, please top up by #{MINIMUM_BALANCE}"
     JourneyError.new(message)
   end
 end
