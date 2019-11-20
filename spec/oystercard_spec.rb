@@ -5,6 +5,7 @@ describe OysterCard do
   let(:min_balance) { OysterCard::MINIMUM_BALANCE }
   let(:min_fare) { OysterCard::MINIMUM_FARE }
   let(:station) { double :station }
+  let(:station2) { double :station }
 
   describe '#initialize' do
     it 'should initialize the class with a balance of zero' do
@@ -60,7 +61,7 @@ describe OysterCard do
     before do
       card.top_up(50)
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(station2)
     end
     it 'should change in_journey status to false' do
       expect(card.in_journey?).to be_falsey
@@ -68,6 +69,13 @@ describe OysterCard do
 
     it 'should deduct a correct amount from my card when journey is complete' do
       expect { card.deduct }.to change { card.balance }.by(-min_fare)
+    end
+
+    it 'should accept an argument of the exit station, and store it' do
+      card.top_up(50)
+      card.touch_in(station)
+      card.touch_out(station2)
+      expect(card.exit_station).to eq(station2)
     end
   end
 end
