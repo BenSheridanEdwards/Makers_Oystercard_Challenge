@@ -72,9 +72,6 @@ describe OysterCard do
     end
 
     it 'should accept an argument of the exit station, and store it' do
-      card.top_up(50)
-      card.touch_in(station)
-      card.touch_out(station2)
       expect(card.exit_station).to eq(station2)
     end
   end
