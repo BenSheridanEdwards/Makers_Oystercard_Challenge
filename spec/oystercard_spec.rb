@@ -15,6 +15,10 @@ describe OysterCard do
     it 'should initialize with an entry station of nil' do
       expect(card.entry_station).to eq(nil)
     end
+
+    it 'should initialze with an empty journey array' do
+      expect(card.journey_list).to eq []
+    end
   end
 
   describe '#top_up' do
