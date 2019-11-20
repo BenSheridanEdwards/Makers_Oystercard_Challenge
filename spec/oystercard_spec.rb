@@ -76,7 +76,11 @@ describe OysterCard do
     end
 
     it 'should accept an argument of the exit station, and store it' do
-      expect(card.exit_station).to eq(station2)
+      expect(card.journey_list[0][:exit]).to eq(station2)
+    end
+
+    it "should store the entry and exit stations as a journey after touching out" do 
+      expect(card.journey_list).to eq([{entry: station, exit: station2}])
     end
   end
 end

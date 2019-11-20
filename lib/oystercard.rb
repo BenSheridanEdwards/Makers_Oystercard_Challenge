@@ -25,14 +25,14 @@ class OysterCard
     @balance -= fare
   end
 
-  def touch_in(station)
-    @entry_station = station
+  def touch_in(entry_station)
+    @entry_station = entry_station
     raise minimum_balance_error if @balance < MINIMUM_BALANCE
   end
 
-  def touch_out(station)
+  def touch_out(exit_station)
+    @journey_list << {entry: @entry_station, exit: exit_station}
     @entry_station = nil
-    @exit_station = station
   end
 
   def in_journey?
