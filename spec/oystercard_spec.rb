@@ -14,7 +14,7 @@ describe OysterCard do
     it 'should initialize the class with a balance of zero' do
       expect(card.balance).to eq(0)
     end
-    
+
     it 'should initialze with an empty journey array' do
       expect(card.journey_list).to eq []
     end

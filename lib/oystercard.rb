@@ -33,26 +33,26 @@ class OysterCard
   end
 
   def in_journey?
-   @current_journey
+    @current_journey
   end
 
-private
+  private
 
-def record_journey
-  @journey_list << @current_journey
-  @current_journey = nil
-end
+  def record_journey
+    @journey_list << @current_journey
+    @current_journey = nil
+  end
 
-def start_journey(station)
-  @current_journey = @journey_class.new
-  @current_journey.start(station)
-end
+  def start_journey(station)
+    @current_journey = @journey_class.new
+    @current_journey.start(station)
+  end
 
-def finish_journey(station)
-  @current_journey = @journey_class.new unless in_journey?
-  @current_journey.finish(station)
-  deduct(@current_journey.fare)
-end
+  def finish_journey(station)
+    @current_journey = @journey_class.new unless in_journey?
+    @current_journey.finish(station)
+    deduct(@current_journey.fare)
+  end
 
   def top_up_amount_error(amount)
     message = "Can't exceed #{LIMIT} with #{amount}"
