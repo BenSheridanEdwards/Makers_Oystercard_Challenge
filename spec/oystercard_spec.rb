@@ -1,21 +1,20 @@
 require 'oystercard'
 describe OysterCard do
-  let(:card) { OysterCard.new }
   let(:limit) { OysterCard::LIMIT }
   let(:min_balance) { OysterCard::MINIMUM_BALANCE }
-  let(:min_fare) { OysterCard::MINIMUM_FARE }
+  let(:min_fare) { 1 }
   let(:station) { double :station }
   let(:station2) { double :station }
+  let(:journey) { double :journey, start: nil, finish: nil, fare: 0}
+  let(:journey_class) { double :journey_class, new: journey }
+
+  subject(:card) { OysterCard.new journey_class }
 
   describe '#initialize' do
     it 'should initialize the class with a balance of zero' do
       expect(card.balance).to eq(0)
     end
-
-    it 'should initialize with an entry station of nil' do
-      expect(card.entry_station).to eq(nil)
-    end
-
+    
     it 'should initialze with an empty journey array' do
       expect(card.journey_list).to eq []
     end
@@ -35,30 +34,26 @@ describe OysterCard do
     end
   end
 
-  describe '#deduct' do
-    it 'should deduct a specified fare,then return the remaining balance' do
-      card.top_up(30)
-      expect(card.deduct(10)).to eq(20)
-    end
-  end
-
   describe '#touch_in' do
-    it 'should accept an argument of the entry station, and store it' do
-      card.top_up(50)
-      card.touch_in(station)
-      expect(card.entry_station).to eq station
-    end
-
-    it 'should be in_journey after touching in' do
-      card.top_up(50)
-      card.touch_in(station)
-      expect(card.in_journey?).to be_truthy
-    end
-
     it 'should raise an error if user tries to travel under minimum balance' do
       message = "Insuffient funds, please top up by #{min_balance}"
       expect { card.touch_in(station) }.to raise_error JourneyError, message
     end
+
+    context "with credit" do 
+      before(:each) { card.top_up(20) }
+
+      it "should start a journey" do 
+        expect(journey).to receive(:start).with station
+        card.touch_in(station)
+      end 
+
+      it "should deduct a penalty if the previous journey wasn't complete" do 
+        allow(journey).to receive(:fare).and_return(10)
+        subject.touch_in(station)
+        expect{ subject.touch_in(station) }.to change { subject.balance }.by -10 
+      end 
+    end 
   end
 
   describe '#touch_out' do
@@ -71,16 +66,19 @@ describe OysterCard do
       expect(card.in_journey?).to be_falsey
     end
 
-    it 'should deduct a correct amount from my card when journey is complete' do
-      expect { card.deduct }.to change { card.balance }.by(-min_fare)
-    end
-
     it 'should accept an argument of the exit station, and store it' do
-      expect(card.journey_list[0][:exit]).to eq(station2)
+      expect(card.journey_list[0]).to eq(journey)
     end
 
-    it "should store the entry and exit stations as a journey after touching out" do 
-      expect(card.journey_list).to eq([{entry: station, exit: station2}])
+    it "should deduct a standard fare" do 
+      card.touch_in(station)
+      allow(journey).to receive(:fare).and_return(1)
+      expect{ subject.touch_out(station) }.to change { subject.balance }.by -1
     end
+
+    it "should deduct a penalty if the journey wasn't started" do 
+      allow(journey).to receive(:fare).and_return(10)
+      expect{ subject.touch_out(station) }.to change { subject.balance }.by -10 
+    end 
   end
 end
