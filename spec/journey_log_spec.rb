@@ -31,7 +31,7 @@ describe JourneyLog do
         expect(subject.in_journey?).to be false
       end
 
-      it "should gice the finish station to the journey" do
+      it "should give the finish station to the journey" do
         expect(journey).to have_received(:finish).with station
       end
     end

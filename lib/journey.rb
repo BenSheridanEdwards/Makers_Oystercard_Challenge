@@ -17,7 +17,6 @@ class Journey
   def fare
     return MINIMUM_FARE if journey_complete?
     return PENALTY_FARE if has_station?
-
     0
   end
 
