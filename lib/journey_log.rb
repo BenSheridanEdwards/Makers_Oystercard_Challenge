@@ -20,9 +20,9 @@ class JourneyLog
     @in_journey = false
   end
 
-  def journeys 
+  def journeys
     @journey_log.dup
-  end 
+  end
 
   private
   def current_journey

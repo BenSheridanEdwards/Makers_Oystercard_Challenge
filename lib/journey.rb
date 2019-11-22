@@ -1,5 +1,5 @@
 class Journey
-  PENALTY_FARE = 10
+  PENALTY_FARE = 6
   MINIMUM_FARE = 1
 
   attr_reader :in_journey, :entry_station, :exit_station
@@ -12,10 +12,11 @@ class Journey
   def finish station
     @exit_station = station
     @in_journey = false
+    fare
   end
 
   def fare
-    return MINIMUM_FARE if journey_complete?
+    return MINIMUM_FARE + zone_fare if journey_complete?
     return PENALTY_FARE if has_station?
     0
   end
@@ -29,4 +30,9 @@ class Journey
   def has_station?
     @entry_station || @exit_station
   end
+
+  def zone_fare
+    (@entry_station.zone - @exit_station.zone).abs
+  end
+
 end

@@ -1,8 +1,9 @@
 require "journey"
 
 describe Journey do
-  let(:station1) { double(:entry_station) }
-  let(:station2) { double(:exit_station) }
+  let(:station1) { double(:entry_station, zone: 1) }
+  let(:station2) { double(:exit_station, zone: 3) }
+  let(:zone_fare) { 2 }
 
   describe "#fare" do
     it "should be zero by default" do
@@ -43,7 +44,7 @@ describe Journey do
     end
 
     it "should charge the minimum fare upon completetion of a journey" do
-      expect(subject.fare).to eq Journey::MINIMUM_FARE
+      expect(subject.fare).to eq Journey::MINIMUM_FARE + zone_fare
     end
   end
 

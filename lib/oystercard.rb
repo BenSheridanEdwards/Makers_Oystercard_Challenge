@@ -1,11 +1,12 @@
 require_relative 'station'
+require_relative 'journey'
+require_relative 'journey_log'
 
 class OysterCard
   LIMIT = 100
   MINIMUM_BALANCE = 1
 
   attr_reader :balance
-  attr_reader :journey_log
 
   def initialize(journey_log = JourneyLog.new, balance = 0)
     @balance = balance
@@ -20,17 +21,22 @@ class OysterCard
   end
 
   def touch_in(station)
-    # deduct @journey_log.current_journey.fare if @journey_log.in_journey?
+    deduct @journey_log.journeys.last.fare if @journey_log.in_journey?
     raise minimum_balance_error if @balance < MINIMUM_BALANCE
     @journey_log.start(station)
   end
 
   def touch_out(station)
-    journey_log.finish(station)
+    @journey_log.finish(station)
+    deduct(@journey_log.journeys.last.fare)
+  end
+
+  def journey_history
+    @journey_log.journeys
   end
 
   private
-  
+
   def top_up_amount_error(amount)
     message = "Can't exceed #{LIMIT} with #{amount}"
     BalanceError.new(message)
