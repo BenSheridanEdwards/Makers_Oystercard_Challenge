@@ -34,6 +34,13 @@ describe JourneyLog do
       it "should give the finish station to the journey" do
         expect(journey).to have_received(:finish).with station
       end
+
+    end
+
+    context "when we want to see our journeys" do
+      it "should return a copy of the journey log" do
+        expect(subject.journeys).to include(journey)
+      end
     end
   end
 end

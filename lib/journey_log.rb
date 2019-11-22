@@ -1,5 +1,4 @@
 class JourneyLog
-  attr_reader :journey_log
   def initialize journey_class = Journey
     @in_journey = false
     @journey_log = []
@@ -26,7 +25,7 @@ class JourneyLog
   end 
 
   private
-  def last_journey_if_incomplete
+  def current_journey
     return @journey_log.last if in_journey?
   end
 end
