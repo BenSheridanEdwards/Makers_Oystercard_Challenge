@@ -82,3 +82,13 @@ I need to have the correct fare calculated
 
 <a name="Methods">Objects & Methods</a>
 
+###OysterCard
+
+| Methods | Description |
+| --- | --- |
+| OysterCard.new    | Creates a new instance of Oyster Card                                                                |
+| .top_up(amount)   | Allows the user to top up their balance by a given amount                                            |
+| .touch_in(station)| Creates a new instance of journey and stores the start station as an attribute within the journey log|
+| .report_broken    | Reports the bike as broken                                |
+  
+
