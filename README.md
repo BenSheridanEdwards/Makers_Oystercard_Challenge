@@ -82,6 +82,7 @@ I need to have the correct fare calculated
 
 <a name="Methods">Objects & Methods</a>
 
+
 ### OysterCard
 
 | Methods | Description |
@@ -91,6 +92,7 @@ I need to have the correct fare calculated
 | .touch_in(station) | Creates a new instance of journey and stores the station as an attribute of journey within the journey log |
 | .touch_out(station)| Adds the finish station attribute to the current instance of journey and deduces the fare            |
 | .journey_history   | Displays a copy of the journey log|
+
 
 ### Journey Log
 
@@ -102,10 +104,15 @@ I need to have the correct fare calculated
 |.finish(station) | Called by the 'touch_out' method on the OysterCard class. It passes the station to the last journey instance in the journey log. Also switches in_journey to false |
 | .journeys | Creates a copy of the current Journey Log and outputs it to the user |
 
+
 ### Journey
 
 | Methods | Description |
 | --- | --- |
+| .start(station) | Sets the station as the @entry_station attribute of the journey instance & sets in_journey to true.
+| .finish(station) | Sets the station as the @exit_station attribute of the journey instance & sets in_journey to false.
+| .fare | Calulates the fare based on the minimum fare, zones traveled, and if a penalty has been issued for a previous journey |
+
 
 
 
