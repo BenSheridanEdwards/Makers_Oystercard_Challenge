@@ -82,13 +82,33 @@ I need to have the correct fare calculated
 
 <a name="Methods">Objects & Methods</a>
 
-###OysterCard
+### OysterCard
 
 | Methods | Description |
 | --- | --- |
-| OysterCard.new    | Creates a new instance of Oyster Card                                                                |
-| .top_up(amount)   | Allows the user to top up their balance by a given amount                                            |
-| .touch_in(station)| Creates a new instance of journey and stores the start station as an attribute within the journey log|
-| .report_broken    | Reports the bike as broken                                |
+| OysterCard.new     | Creates a new instance of Oyster Card                                                                |
+| .top_up(amount)    | Allows the user to top up their balance by a given amount                                            |
+| .touch_in(station) | Creates a new instance of journey and stores the station as an attribute of journey within the journey log |
+| .touch_out(station)| Adds the finish station attribute to the current instance of journey and deduces the fare            |
+| .journey_history   | Displays a copy of the journey log|
+
+### Journey Log
+
+| Methods | Description |
+| --- | --- |
+| JourneyLog.new | Creates a new instance of Journey Log |
+| .in_journey? | Returns true if the last instance of journey in the journey log has a start station and no finish station | 
+| .start(station) | Called by the 'touch_in' method on the OysterCard class. It initializes an instance of Journey and passes the station argument to it. It also sets in_journey to true. |
+|.finish(station) | Called by the 'touch_out' method on the OysterCard class. It passes the station to the last journey instance in the journey log. Also switches in_journey to false |
+| .journeys | Creates a copy of the current Journey Log and outputs it to the user |
+
+### Journey
+
+| Methods | Description |
+| --- | --- |
+
+
+
+
   
 
