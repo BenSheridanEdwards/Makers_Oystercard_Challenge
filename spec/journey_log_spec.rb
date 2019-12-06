@@ -8,7 +8,7 @@ describe JourneyLog do
   subject { JourneyLog.new journey_class }
 
   context "when there are no journeys" do
-    it "should not be in journey" do
+    it "should not be in a journey" do
       expect(subject.in_journey?).to be false
     end
   end
