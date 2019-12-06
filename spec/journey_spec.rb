@@ -20,7 +20,7 @@ describe Journey do
       expect(subject.in_journey).to eq true
     end
 
-    it "should have an entry station" do
+    it "should return the entry station" do
       expect(subject.entry_station).to eq station1
     end
 
