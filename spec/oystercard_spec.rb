@@ -11,7 +11,7 @@ describe OysterCard do
   let(:journey_log) { double :journey_log, journeys: [journey], start: nil, finish: nil }
   let(:journey_log_class) { double :journey_log_class, new: journey_log }
 
-  subject(:card) { OysterCard.new journey_log}
+  subject(:card) { OysterCard.new journey_log }
 
   describe '#initialize' do
     it 'should initialize the class with a balance of zero' do
@@ -53,7 +53,7 @@ describe OysterCard do
         allow(journey_log).to receive(:in_journey?).and_return(false, true)
         allow(journey).to receive(:fare).and_return(penalty_fare)
         subject.touch_in(station)
-        expect{ subject.touch_in(station) }.to change { subject.balance }.by -penalty_fare
+        expect { subject.touch_in(station) }.to change { subject.balance }.by -penalty_fare
       end
     end
   end
@@ -72,14 +72,14 @@ describe OysterCard do
         allow(journey_log).to receive(:in_journey?).and_return(false)
         card.touch_in(station)
 
-        expect{ subject.touch_out(station2) }.to change { subject.balance }.by -(min_fare + zone_fare)
+        expect { subject.touch_out(station2) }.to change { subject.balance }.by -(min_fare + zone_fare)
       end
     end
 
     it "should deduct a penalty if the journey wasn't started" do
       allow(journey_log).to receive(:in_journey?).and_return(false)
       allow(journey).to receive(:fare).and_return(penalty_fare)
-      expect{ subject.touch_out(station) }.to change { subject.balance }.by -penalty_fare
+      expect { subject.touch_out(station) }.to change { subject.balance }.by -penalty_fare
     end
   end
 end
