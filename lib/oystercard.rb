@@ -23,6 +23,7 @@ class OysterCard
   def touch_in(station)
     deduct @journey_log.journeys.last.fare if @journey_log.in_journey?
     raise minimum_balance_error if @balance < MINIMUM_BALANCE
+    
     @journey_log.start(station)
   end
 
