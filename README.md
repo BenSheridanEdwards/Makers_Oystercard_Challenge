@@ -1,19 +1,18 @@
 
 ### [Makers Academy](http://www.makersacademy.com) - Week 2 Pair Programming Project
 
-# Oystercard Challenge
+Oystercard Ruby Challenge
+-
 
-
-[User Story](#Story) | [Objects & Methods](#Methods)
+[Outline](#Outline) | [Task](#Task) | [Goals](#Goals) | [Installation Instructions](#Installation) | [User Stories](#Story) | [Objects & Methods](#Methods) | [Feature Tests](#Feature_Tests) |
 
 ## <a name="Outline">Outline</a>
 
-
+Build London's Oystercard system in Ruby!
 
 ## <a name="Task">The Task</a>
 
 This week's challenge will start with going back over the basics I covered last week in Boris Bikes, giving me the chance to reinforce what I learned last week. I'll then be challenged to build a more complex system which should really stretch my skills in Ruby, TDD and object-oriented design.
-
 
 ## <a name="Goals">Goals</a>
 
@@ -28,7 +27,9 @@ Tested software is easier to change because you can tell when it's broken just b
 ### I can build with objects
 Most code in the world is structured in small pieces called objects. This is done because it is easier to change than having everything in one place.
 
-<a name="Story">User Story</a>
+## <a name="Installation">Installation Instructions</a>
+
+## <a name="Story">User Stories</a>
 
 ```
 In order to use public transport
@@ -82,7 +83,6 @@ I need to have the correct fare calculated
 
 <a name="Methods">Objects & Methods</a>
 
-
 ### OysterCard
 
 | Methods | Description |
@@ -114,8 +114,6 @@ I need to have the correct fare calculated
 | .fare | Calulates the fare based on the minimum fare, zones traveled, and if a penalty has been issued for a previous journey |
 
 
+## <a name="Feature Test">Feature Tests</a>
 
-
-
-  
-
+To be added...
